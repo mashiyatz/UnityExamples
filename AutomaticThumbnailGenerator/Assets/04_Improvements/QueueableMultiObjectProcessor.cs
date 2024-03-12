@@ -10,8 +10,15 @@ namespace ThumbGenExamples
 
         private IGameObjectActivity _curActivity;
 
+        [SerializeField]
+        private GameObject[] modelPrefabs;
+
+        [SerializeField]
+        private string folderName;
+
         void Start()
         {
+
         }
 
         void Awake()
@@ -21,17 +28,22 @@ namespace ThumbGenExamples
 
             ThumbnailGenerator2 thumbGen = GetComponent<ThumbnailGenerator2>();
 
-            string[] objectResourceNames =
+            /*string[] objectResourceNames = new string[modelPrefabs.Length];
+
+            for (int i = 0; i < modelPrefabs.Length;  i++)
             {
-                "objects/Cube",
-                "objects/Cylinder",
-                "objects/Capsule",
-                "objects/Sphere"
-            };
+                objectResourceNames[i] = $"{folderName}/{modelPrefabs[i].name}";
+            }
 
             foreach (var name in objectResourceNames)
             {
                 var thumbActivity = new ThumbnailActivity(thumbGen, name);
+                QueueActivity(thumbActivity);
+            }*/
+
+            foreach (GameObject go in modelPrefabs)
+            {
+                var thumbActivity = new ThumbnailActivity(thumbGen, $"{folderName}/{go.name}");
                 QueueActivity(thumbActivity);
             }
         }

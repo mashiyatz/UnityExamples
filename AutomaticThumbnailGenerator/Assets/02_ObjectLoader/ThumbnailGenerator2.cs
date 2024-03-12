@@ -20,10 +20,14 @@ namespace ThumbGenExamples
         /// <summary>
         /// If this is not null or empty, the texture is exported as a png to the file system.
         /// </summary>
-        public string ExportFilePath;
+        private string ExportFilePath;
+
+        [SerializeField]
+        private string ExportFolder;
 
         void Start()
         {
+            ExportFilePath = Application.dataPath;
             ThumbnailWidth = 256;
             ThumbnailHeight = 256;
         }
@@ -90,11 +94,11 @@ namespace ThumbGenExamples
                     filename = filename.Replace(c, '_');
                 }
 
-
-                string finalPath = string.Format("{0}/{1}.png", ExportFilePath, filename);
+                string finalPath = string.Format("{0}/{1}/{2}.png", ExportFilePath, ExportFolder, filename);
+                Debug.Log(finalPath);
 
                 byte[] bytes = tex.EncodeToPNG();
-                System.IO.File.WriteAllBytes(ExportFilePath + "/" + filename + ".png", bytes);
+                System.IO.File.WriteAllBytes(finalPath, bytes);
             }
         }
     }
